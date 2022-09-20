@@ -1,10 +1,10 @@
 package com.example.shardingdatabasedemo.com.config;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.RangeShardingValue;
 import org.apache.shardingsphere.sharding.api.sharding.standard.StandardShardingAlgorithm;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Properties;
@@ -13,8 +13,10 @@ import java.util.Properties;
  * shardingAlgorithm
  */
 @Slf4j
-@Component(value = "shardingAlgorithmConfig")
-public class ShardingAlgorithmConfig implements StandardShardingAlgorithm<String> {
+@Getter
+public final class ShardingAlgorithmConfig implements StandardShardingAlgorithm<String> {
+
+    private Properties props;
 
     @Override
     public String doSharding(Collection<String> tableNames, PreciseShardingValue<String> shardingValue) {
@@ -38,20 +40,8 @@ public class ShardingAlgorithmConfig implements StandardShardingAlgorithm<String
         return availableTargetNames;
     }
 
-
     @Override
-    public String getType() {
-        return null;
+    public void init(Properties props) {
+        this.props = props;
     }
-
-    @Override
-    public Properties getProps() {
-        return null;
-    }
-
-    @Override
-    public void init() {
-
-    }
-
 }
